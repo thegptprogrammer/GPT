@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Attendance Management System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <h1>Attendance Management System</h1>
+        <p>Track employees, attendance, payrolls, and holidays in one place.</p>
+      </div>
+      <div class="auth-card">
+        <h2>Sign In</h2>
+        <div class="field">
+          <label for="role">Sign in as</label>
+          <select id="role">
+            <option value="business">Business</option>
+            <option value="employee">Employee</option>
+          </select>
+        </div>
+        <div class="field" id="employee-select-wrapper">
+          <label for="employee-select">Employee</label>
+          <select id="employee-select"></select>
+        </div>
+        <button id="sign-in">Continue</button>
+        <p class="muted" id="sign-in-status">Not signed in.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel" id="business-panel" hidden>
+        <h2>Business Dashboard</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Add Employee</h3>
+            <form id="employee-form">
+              <div class="field">
+                <label for="emp-name">Employee name</label>
+                <input id="emp-name" required />
+              </div>
+              <div class="field">
+                <label for="emp-mobile">Mobile number (with country code)</label>
+                <input id="emp-mobile" placeholder="+1 555 000 0000" required />
+              </div>
+              <div class="field">
+                <label for="emp-join">Joining date</label>
+                <input id="emp-join" type="date" required />
+              </div>
+              <div class="field">
+                <label for="emp-dob">Date of birth</label>
+                <input id="emp-dob" type="date" required />
+              </div>
+              <div class="field">
+                <label for="emp-designation">Employee designation</label>
+                <input id="emp-designation" required />
+              </div>
+              <div class="field">
+                <label for="emp-email">Email</label>
+                <input id="emp-email" type="email" required />
+              </div>
+              <div class="field">
+                <label for="emp-salary">Monthly salary</label>
+                <input id="emp-salary" type="number" min="0" required />
+              </div>
+              <div class="field">
+                <label for="emp-leaves">Leaves allowed per month</label>
+                <input id="emp-leaves" type="number" min="0" required />
+              </div>
+              <div class="field">
+                <label for="emp-working">Working days per month</label>
+                <input id="emp-working" type="number" min="0" required />
+              </div>
+              <button type="submit">Add employee</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>Attendance</h3>
+            <form id="attendance-form">
+              <div class="field">
+                <label for="attendance-employee">Employee</label>
+                <select id="attendance-employee"></select>
+              </div>
+              <div class="field">
+                <label for="attendance-date">Date</label>
+                <input id="attendance-date" type="date" required />
+              </div>
+              <div class="field">
+                <label for="check-in">Check in</label>
+                <input id="check-in" type="time" />
+              </div>
+              <div class="field">
+                <label for="check-out">Check out</label>
+                <input id="check-out" type="time" />
+              </div>
+              <div class="field">
+                <label for="attendance-status">Status</label>
+                <select id="attendance-status">
+                  <option value="present">Present</option>
+                  <option value="halfday">Half day</option>
+                  <option value="absent">Absent</option>
+                  <option value="holiday">Holiday</option>
+                </select>
+              </div>
+              <button type="submit">Save attendance</button>
+            </form>
+            <div class="summary" id="attendance-summary"></div>
+          </article>
+
+          <article class="card">
+            <h3>Salary Advance</h3>
+            <form id="advance-form">
+              <div class="field">
+                <label for="advance-employee">Employee</label>
+                <select id="advance-employee"></select>
+              </div>
+              <div class="field">
+                <label for="advance-amount">Advance amount</label>
+                <input id="advance-amount" type="number" min="0" required />
+              </div>
+              <div class="field">
+                <label for="advance-date">Date</label>
+                <input id="advance-date" type="date" required />
+              </div>
+              <button type="submit">Record advance</button>
+            </form>
+            <div class="summary" id="advance-summary"></div>
+          </article>
+
+          <article class="card">
+            <h3>Employee Remarks</h3>
+            <form id="remark-form">
+              <div class="field">
+                <label for="remark-employee">Employee</label>
+                <select id="remark-employee"></select>
+              </div>
+              <div class="field">
+                <label for="remark-date">Date</label>
+                <input id="remark-date" type="date" required />
+              </div>
+              <div class="field">
+                <label for="remark-text">Remark</label>
+                <textarea id="remark-text" rows="3" required></textarea>
+              </div>
+              <button type="submit">Add remark</button>
+            </form>
+            <div class="summary" id="remark-summary"></div>
+          </article>
+
+          <article class="card">
+            <h3>Payrolls</h3>
+            <form id="payroll-form">
+              <div class="field">
+                <label for="payroll-employee">Employee</label>
+                <select id="payroll-employee"></select>
+              </div>
+              <div class="field">
+                <label for="payroll-period">Period</label>
+                <input id="payroll-period" placeholder="Aug 2024" required />
+              </div>
+              <div class="field">
+                <label for="payroll-amount">Net pay</label>
+                <input id="payroll-amount" type="number" min="0" required />
+              </div>
+              <button type="submit">Add payroll</button>
+            </form>
+            <div class="summary" id="payroll-summary"></div>
+          </article>
+
+          <article class="card">
+            <h3>Holidays</h3>
+            <form id="holiday-form">
+              <div class="field">
+                <label for="holiday-date">Date</label>
+                <input id="holiday-date" type="date" required />
+              </div>
+              <div class="field">
+                <label for="holiday-name">Holiday name</label>
+                <input id="holiday-name" required />
+              </div>
+              <button type="submit">Add holiday</button>
+            </form>
+            <div class="summary" id="holiday-summary"></div>
+          </article>
+
+          <article class="card">
+            <h3>Active / Inactive Employees</h3>
+            <div id="employee-status-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="employee-panel" hidden>
+        <h2>Employee Portal</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>My Attendance</h3>
+            <form id="self-attendance-form">
+              <div class="field">
+                <label for="self-date">Date</label>
+                <input id="self-date" type="date" required />
+              </div>
+              <div class="field">
+                <label for="self-check-in">Check in</label>
+                <input id="self-check-in" type="time" />
+              </div>
+              <div class="field">
+                <label for="self-check-out">Check out</label>
+                <input id="self-check-out" type="time" />
+              </div>
+              <button type="submit">Save my attendance</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <h3>My Summary</h3>
+            <div id="employee-summary"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Data is stored locally in your browser.</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
